@@ -16,11 +16,14 @@ describe "Current Administration" do
     # Then you can assign any properties on the OpenStruct
     administration.president = "Barack Obama"
     
-    administration.vice_president = "Broseph Jiden"
+    administration.vice_president = "Joe Biden"
+    
+    administration.first_lady = "Michelle Obama"
     
     # This last line has `administration` so that it is returned as the subject
     administration
   end
+  
   
   it "should have a president" do
     subject.should respond_to :president
@@ -38,8 +41,8 @@ describe "Current Administration" do
   # This is the same as the test above. This is essentially a shortcut for
   # typeing the following: "subject.president.should == 'Barack Obama'"
   #
+  
   its(:president) { should == "Barack Obama" }
-
 
   
   its(:first_lady) { should == "Michelle Obama" }
@@ -47,16 +50,32 @@ describe "Current Administration" do
   its(:vice_president) { should == "Joe Biden" }
 
   describe "cabinet" do
+
+    subject do
+
+      # Creating a new OpenStruct here
+      cabinet = OpenStruct.new
+
+      # Then you can assign any properties on the OpenStruct
+
+      cabinet.state_department = "Hillary Clinton"
+
+
+      # This last line has `cabinet` so that it is returned as the subject
+      cabinet
+    end
+
+
     
     it "should be present" do
     
-      subject.should respond_to(:cabinet)
+      subject.should respond_to(:state_department)
     
     end
     
-    it "should have a statement department" do
+    it "should have a state department" do
       
-      subject.cabinet.state_department.should == "Hillary Clinton"
+      subject.state_department.should == "Hillary Clinton"
       
     end
     

@@ -6,8 +6,8 @@
 # 
 # @see http://en.wikipedia.org/wiki/Batman
 
-Villian = Struct.new :name
-Superhero = Struct.new :name, :origin, :nemesis
+Villian = Struct.new :name, :nemesis
+Superhero = Struct.new :name, :origin, :nemesis, :nick_name, :alter_ego
 AlterEgo = Struct.new :name, :superhero
 
 describe Villian do
@@ -17,10 +17,10 @@ describe Villian do
   # 
   # Here we are saying: For these examples like any references to `joker` return
   # the value returned between the two mustaches (the block).
-  # 
+  # ""
   # @see https://www.relishapp.com/rspec/rspec-core/docs/helper-methods/let-and-let
   # 
-  let(:batman) { Superhero.new "Batman", "Gotham City" }
+  let(:batman) { Superhero.new "Batman", "Gotham City", "Joker", "Bruce Wayne" }
   
   
   #
@@ -29,8 +29,8 @@ describe Villian do
   #
   # @see https://www.relishapp.com/rspec/rspec-core/docs/subject/explicit-subject
   #
-  subject { Villian.new "Joker" }
-  
+  subject { Villian.new "Joker", batman }
+
   
   it "should have the correct name" do
     
@@ -49,7 +49,7 @@ describe Villian do
     
     it "should have the correct nemesis" do
       
-      subject.nemesis.should == batman 
+      subject.nemesis.should == batman
       
     end
     
@@ -67,9 +67,9 @@ describe Superhero do
   # 
   # @see https://www.relishapp.com/rspec/rspec-core/docs/helper-methods/let-and-let
   # 
-  let(:joker) { Villian.new "Joker" }
+  let(:joker) { Villian.new "Joker","Batman" }
 
-  let(:bruce_wayne) { AlterEgo.new "Bruce Wayne" }
+  let(:bruce_wayne) { AlterEgo.new "Bruce Wayne","Batman" }
   
   #
   # This is an example of using RSpec's explicit subject. The value here is 
@@ -77,7 +77,7 @@ describe Superhero do
   #
   # @see https://www.relishapp.com/rspec/rspec-core/docs/subject/explicit-subject
   #
-  subject { Superhero.new "Batman", "Gotham City", joker }
+  subject { Superhero.new "Batman", "Gotham City", joker, "The Caped Crusader", "Bruce Wayne" }
   
   it "should have a name" do
     subject.should respond_to :name
@@ -99,7 +99,7 @@ describe Superhero do
     
     it "should have the correct name" do
       
-      subject.nemesis.name.should == "Joker"
+      subject.nemesis.should == joker
       
     end
     
@@ -122,7 +122,7 @@ describe Superhero do
     
     it "should have the correct alter ego" do
       
-      subject.alter_ego.should == bruce_wayne
+      subject.alter_ego.should == "Bruce Wayne"
       
     end
     
